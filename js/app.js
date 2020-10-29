@@ -11,7 +11,10 @@ if(allPosts==null){
 else{
     allPostsObj=JSON.parse(allPosts);
 }
-allPostsObj.push([postText.value,title.value]);
+
+let current_datetime = new Date();
+let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+allPostsObj.push([postText.value,title.value,formatted_date]);
 localStorage.setItem("posts",JSON.stringify(allPostsObj));
 postText.value="";
 title.value="";
@@ -31,12 +34,17 @@ else{
 
 let html="";
 allPostsObj.forEach(function(element,index) {
+//     var dd = String(element[2].getDate()).padStart(2, '0');
+// var mm = String(element[2].getMonth() + 1).padStart(2, '0'); //January is 0!
+// var yyyy = element[2].getFullYear();
+// var d= mm + '/' + dd + '/' + yyyy;
     html+=`<div class="noteCard card my-3" style="">
            
     <div class="card-body">
-      <h5 class="card-title">${element[0]}</h5>
+      <h5 class="card-title">${element[0]} </h5>
+      <small>posted on ${element[2]} </small>
       <p class="card-text">${element[1]}</p>
-      <a href="#" class="btn btn-outline-danger btn-sm">Remove</a>
+      <a id ="${index}" onclick="deletePost(this.id)" class="btn btn-outline-danger btn-sm">Remove</a>
     </div>
   </div>`;
 
@@ -49,4 +57,17 @@ if(allPostsObj.length!=0){
 else{
     postsElem.innerHTML="No posts yet!"
 }
+}
+function deletePost(index){
+    console.log("delete called");
+    let allPosts=localStorage.getItem("posts");
+    if(allPosts==null){
+        allPostsObj=[];
+    }
+    else{
+        allPostsObj=JSON.parse(allPosts);
+    }
+    allPostsObj.splice(index,1);
+    localStorage.setItem("posts",JSON.stringify(allPostsObj));
+    showPosts(); 
 }
