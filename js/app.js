@@ -41,9 +41,9 @@ allPostsObj.forEach(function(element,index) {
     html+=`<div class="noteCard card my-3" style="">
            
     <div class="card-body">
-      <h5 class="card-title">${element[0]} </h5>
+      <h5 class="card-title">${element[1]} </h5>
       <small>posted on ${element[2]} </small>
-      <p class="card-text">${element[1]}</p>
+      <p class="card-text">${element[0]}</p>
       <a id ="${index}" onclick="deletePost(this.id)" class="btn btn-outline-danger btn-sm">Remove</a>
     </div>
   </div>`;
